@@ -9,8 +9,10 @@ const store = new Vuex.Store({
     todos: [
       { id: 1, text: 'done1', done: true },
       { id: 2, text: 'done2', done: false }
-    ]
+    ],
+    allRouters: []
   },
+  // 类似计算属性
   getters: {
     doneTodos: state => {
       return state.todos.filter(todo => todo.text)
@@ -22,6 +24,9 @@ const store = new Vuex.Store({
   mutations: {
     increment (state, index) {
       state.count += index
+    },
+    setAllRouters (state, array) {
+      state.allRouters = array
     }
   },
 
@@ -29,6 +34,9 @@ const store = new Vuex.Store({
     increment ({state, commit}, index) {
       console.log('state.count', state.count) // 读取state中的值
       commit('increment', index)
+    },
+    setAllRouters ({state, commit}, array) {
+      commit('setAllRouters', array)
     }
   }
 })
