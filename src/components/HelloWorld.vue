@@ -2,12 +2,17 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>count:{{counts}}</p>
+    <div v-for="item in doneTodos" :key="item.id">
+      <p>{{item.id}}--{{item.text}}</p>
+    </div>
+    <p>doneTodosCount:{{doneTodosCount}}</p>
     <button @click="add(1)">store add</button>
     <button @click="add(10)">store add 10</button>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
@@ -15,10 +20,21 @@ export default {
       msg: 'Welcome to Your Vue.js App'
     }
   },
+  // computed: mapState({ // 辅助函数，一般计算属性中配合使用。
+  //   counts (state) {
+  //     return state.count
+  //   }
+  // }),
   computed: {
-    counts () {
-      return this.$store.state.count
-    }
+    ...mapState({ // 对象展开运算符形式
+      counts (state) {
+        return state.count
+      }
+    }),
+    ...mapGetters([ // 对象展开运算符形式
+      'doneTodos',
+      'doneTodosCount'
+    ])
   },
   methods: {
     add (index) {
